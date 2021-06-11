@@ -22,8 +22,8 @@ pathDat = 'B1R'; % set the folder that contains the in vivo B1+ datasets
 % parameters
 % allIndices     ... all B1+ datasets (library + test-cases)
 % libraryIndices ... datasets used in the optimization (library)
-allIndices     = 1:3; % there are 31 B1+ datasets in total
-libraryIndices = 1:2; % the paper used the first 22 B1+ datasets
+allIndices     = 1:31; % there are 31 B1+ datasets in total
+libraryIndices = 1:22; % the paper used the first 22 B1+ datasets
 allmaps        = cell(1, length(allIndices));     % pre-allocate the cell 
 librarymaps    = cell(1, length(libraryIndices)); % pre-allocate the cell 
 c_dat          = 1;     % initialize dataset counter
@@ -45,9 +45,9 @@ evalAllDatasets;
 
 %% tailored design
 pulseType         = 'tailored';
-numkTpoints       = 3:4;      % number of kT points; tested for 1:5
-numPhaseInit      = 165:166;    % 1-200, #165 performed best for the library
-lambdavec         = [4.64 10];   % result of the L curve optimization; 10^0-10^7
+numkTpoints       = 4;      % number of kT points; tested for 1:5
+numPhaseInit      = 165;    % 1-200, #165 performed best for the library
+lambdavec         = [4.64];  % result of the L curve optimization; 10^0-10^7
 phsinitmode       = 'randphase'; % performed best
 b_evalAllDatasets = true;   % evaluate the tailored pulse in allmaps
 numTailored       = 1;      % just compute one tailored pulse
@@ -57,9 +57,9 @@ designTailored;
 
 %% do the UP design
 pulseType         = 'UP';
-numkTpoints       = 3:4;      % number of kT points; tested for 1:5
-numPhaseInit      = 165:166;    % 1-200, #165 performed best for the library
-lambdavec         = [107.97 200]; % result of the L curve optimization; 10^0-10^7
+numkTpoints       = 4;        % number of kT points; tested for 1:5
+numPhaseInit      = 165;      % 1-200, #165 performed best for the library
+lambdavec         = [107.97]; % result of the L curve optimization; 10^0-10^7
 phsinitmode       = 'randphase';
 b_evalAllDatasets = true;   % evaluate the tailored pulse in allmaps
 
