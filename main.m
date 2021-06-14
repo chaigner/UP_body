@@ -38,7 +38,15 @@ prbp.nblippts  = 20;    % # of time points for gradient blips
 prbp.delta_tip = 10;    % flip angle in degrees
 
 %% load the B1R datasets and create the library and unseen test cases
+loadB1R_OK = 0;
 loadB1R;
+
+if ~loadB1R_OK
+	disp('The 31 channel-wise invivo B1+ datasets of the human body at 7T');
+    disp('are available at:');
+    disp('https://figshare.com/articles/dataset/31_channel-wise_invivo_B1_maps_of_the_human_body_at_7T/14778345');
+    return;
+end
 
 %% default shim setting
 pulseType   = 'default';

@@ -13,7 +13,7 @@ disp(['load ', num2str(length(allIndices)), ' invivo B1+ maps']);
 for c_subj=1:length(allIndices) 
     %load the Matlab container for dataset #countsubj
     if ~isfile([pathDat '\lightB1R_' num2str(allIndices(c_subj)) '.mat'])
-        disp('The 31 channel-wise invivo B1+ datasets of the human body at 7T are available at: https://figshare.com/articles/dataset/31_channel-wise_invivo_B1_maps_of_the_human_body_at_7T/14778345');
+        disp('NO B1 MAPS FOUND!');
         return;
     end
     load([pathDat '\lightB1R_' num2str(allIndices(c_subj)) '.mat']);
@@ -53,4 +53,5 @@ for c_subj=1:length(allIndices)
         librarymaps{c_dat} = maps;
         c_dat = c_dat+1;
     end
+    loadB1R_OK = 1;
 end
