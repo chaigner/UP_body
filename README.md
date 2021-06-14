@@ -15,10 +15,17 @@ Contents
     main.m          test script to compute and evaluate tailored and universal pulses
 
 ##### Routines called by the test scripts:
-    TBD
+    cmap.mat            256x3 double matrix with the used colormap of the manuscript
+    designTailored.m    script to compute tailored kT-point pulses
+    designUP.m          script to compute universal kT-point pulses
+    evalAllDatasets.m   script to evaluates default shim setting, tailored pulses and universal pulses
+    getHeartCenter.m    function to get the heart position of each B1+ dataset
+    loadB1R.m           script to load the B1+ maps and prepare the cell structures
+    preparekTpoints.m   script to generate the RF and 3D gradient vectors for the measurement and perform a quality check
+    kTrandphases.mat    200x8 double matrix with randomized phase initials
     
-##### Data files used by the test scripts:
-    B1R.zip         The 31 B1+ datasets are available at: TBD
+##### External data files used by the test scripts:
+    B1R.zip          The 31 B1+ datasets are available at: TBD
     
 Dependencies
 ------------
