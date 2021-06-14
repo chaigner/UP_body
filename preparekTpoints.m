@@ -1,12 +1,7 @@
-% This script prepares the universal kT-point pulse as described in
-% Christoph S. Aigner, Sebastian Dietrich, Tobias Schaeffter and Sebastian
-% Schmitter, Calibration-free pTx of the human heart at 7T via 3D universal 
-% pulses, submitted to Magn. Reson. Med. 2021
+% This script prepares the universal kT-point pulse
 % 
 % Created by Christoph S. Aigner, PTB, June 2021.
 % Email: christoph.aigner@ptb.de
-%
-% This code is free under the terms of the MIT license.
 
 roi     = maps.mask;    % load mask
 B1in    = maps.b1;      % load B1 maps

@@ -1,3 +1,8 @@
+% function to get the heart position of each B1+ dataset 
+%
+% Created by Christoph S. Aigner, PTB, June 2021.
+% Email: christoph.aigner@ptb.de
+
 function [transpos, corpos, sagpos] = getHeartCenter(c_subj)
 
 transpos=32;

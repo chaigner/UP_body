@@ -1,6 +1,9 @@
 % This script evaluates default shim setting, tailored pulses and universal
 % pulses using the CV in the 3D heart target region (small tip angle) in 
 % each of the B1+ datasets. 
+% 
+% Created by Christoph S. Aigner, PTB, June 2021.
+% Email: christoph.aigner@ptb.de
 
 %initialize the arrays for the first time
 if ~(exist('CV_pre_all_subectrob','var'))

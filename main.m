@@ -1,20 +1,25 @@
-% This test script loads 31 in vivo B1+ datasets and computes tailored and 
-% universal (22 B1+ datasets) kT-point pulses as described in
+% This test script loads 31 invivo B1+ datasets of the human body at 7T 
+% and computes tailored and universal (22 B1+ datasets) kT-point pulses.
+% This script also evaluates default shim setting, tailored pulses and 
+% universal pulses using the CV in the 3D heart target region in 31 B1+ 
+% datasets as described in:
+%
 % Christoph S. Aigner, Sebastian Dietrich, Tobias Schaeffter and Sebastian
 % Schmitter, Calibration-free pTx of the human heart at 7T via 3D universal 
 % pulses, submitted to Magn. Reson. Med. 2021
-% The script evaluates default shim setting, tailored pulses and universal
-% pulses using the CV in the 3D heart target region in the 31 B1+ datasets. 
-% All B1+ datasets from the publication are available at: ....
 %
-% The optimization of the kT-points is performed using code by Zhipeng Cao 
-% and Will Grissom (https://bitbucket.org/wgrissom/acptx/) who have given 
+% The 31 channel-wise invivo B1+ datasets of the human body at 7T are 
+% available at: 
+% https://figshare.com/articles/dataset/31_channel-wise_invivo_B1_maps_of_the_human_body_at_7T/14778345
+%
+% The optimization of the kT-points is performed using code by Will Grissom
+% and Zhipeng Cao (https://bitbucket.org/wgrissom/acptx/) who have given 
 % permission for inclusion within this package. Please cite appropriately.
 % 
 % Created by Christoph S. Aigner, PTB, June 2021.
 % Email: christoph.aigner@ptb.de
 %
-% This code is free under the terms of the MIT license.
+% This code is free under the terms of the GPL-3.0 license.
 
 addpath ktutil   % add code by Will Grissom and Zhipeng Cao
 pathDat = 'B1R'; % set the folder that contains the in vivo B1+ datasets

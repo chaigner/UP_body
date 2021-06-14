@@ -2,12 +2,12 @@
 % Christoph S. Aigner, Sebastian Dietrich, Tobias Schaeffter and Sebastian
 % Schmitter, Calibration-free pTx of the human heart at 7T via 3D universal 
 % pulses, submitted to Magn. Reson. Med. 2021
-% All B1+ datasets from the publication are available at: ....
+% The 31 channel-wise invivo B1+ datasets of the human body at 7T are 
+% available at: 
+% https://figshare.com/articles/dataset/31_channel-wise_invivo_B1_maps_of_the_human_body_at_7T/14778345
 % 
 % Created by Christoph S. Aigner, PTB, June 2021.
 % Email: christoph.aigner@ptb.de
-%
-% This code is free under the terms of the MIT license.
 
 disp(['load ', num2str(length(allIndices)), ' invivo B1+ maps']);
 for c_subj=1:length(allIndices) 
