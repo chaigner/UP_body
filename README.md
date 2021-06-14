@@ -1,20 +1,48 @@
 # UP_body
-(The full description of this code will be updated soon!)
 
-This code loads 31 in vivo B1+ datasets and computes and evaluates tailored and 
-universal (22 B1+ datasets) kT-point pulses as described in:
+This repository contains a MATLAB implementation to load 31 in vivo B1+ datasets and compute and evaluate tailored and 
+universal pulses based on a library of 22 B1+ datasets as described in [1]. The 31 B1+ maps are available at: ... and were computed as described in [2].
 
-Christoph S. Aigner, Sebastian Dietrich, Tobias Schaeffter and Sebastian
-Schmitter, Calibration-free pTx of the human heart at 7T via 3D universal 
-pulses, submitted to Magn. Reson. Med. 2021
+##### Authors:
+- Christoph S. Aigner    (<christoph.aigner@ptb.de>)
+- Sebastian Dietrich    (<sebastian.dietrich@ptb.de>)
+- Tobias Schäffter  (<tobias.schaeffter@ptb.de>)
+- Sebastian Schmitter          (<sebastian.schmitter@ptb.de>)
 
-All B1+ datasets from the publication are available at: ....
+Contents
+--------
 
-The optimization of the kT-points is performed using code by Zhipeng Cao 
-and Will Grissom (https://bitbucket.org/wgrissom/acptx/) who have given 
+##### Test scripts (run these):
+    main.m          test script to load 31 in vivo B1+ datasets and compute and evaluate tailored and universal pulses based on a library of 22 B1+ datasets
+
+##### Routines called by the test scripts:
+    TBD
+    
+##### Data files used by the test scripts:
+    B1R.zip         The 31 B1+ datasets are available at: ....
+    
+Dependencies
+------------
+These routines were tested under MATLAB R2013b -- R2014b under Linux (x86_64), OS X (10.10) and Windows, but should also run under older versions.
+
+The 31 B1+ maps were computed as described in [2].
+
+The optimization of the kT-points is performed using code by Will Grissom and Zhipeng Cao (https://bitbucket.org/wgrissom/acptx/) who have given 
 permission for inclusion within this package. Please cite appropriately.
+
+License
+-------
+
+This software is published under GNU GPLv3. 
+In particular, all source code is provided "as is" without warranty of any kind, either expressed or implied. 
+For details, see the attached LICENSE.
+
+Reference
+---------
+
+[1] Aigner, CS, Dietrich, S, Schaeffter, T, and Schmitter, S, Calibration-free pTx of the human heart at 7T via 3D universal pulses, submitted to Magn. Reson. Med. 2021
+
+[2] Dietrich, S, Aigner, CS, Kolbitsch, C, et al. 3D Free-breathing multichannel absolute B1+ Mapping in the human body at 7T. Magn Reson Med. 2021; 85: 2552– 2567. https://doi.org/10.1002/mrm.28602
 
 Created by Christoph S. Aigner, PTB, June 2021.
 Email: christoph.aigner@ptb.de
-
-This code is free under the terms of the MIT license.
