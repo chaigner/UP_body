@@ -1,4 +1,4 @@
-% This script computes tailored kT-point pulses as described in
+% This function computes tailored kT-point pulses as described in
 % Christoph S. Aigner, Sebastian Dietrich, Tobias Schaeffter and Sebastian
 % Schmitter, Calibration-free pTx of the human heart at 7T via 3D universal 
 % pulses, submitted to Magn. Reson. Med. 2021
@@ -9,6 +9,12 @@
 % 
 % Created by Christoph S. Aigner, PTB, June 2021.
 % Email: christoph.aigner@ptb.de
+
+function [designTailored_OK] = designTailored(pulseType, numkTpoints, numPhaseInit, lambdavec, phsinitmode, b_evalAllDatasets, numTailored, prbp) 
+B1Dim = prbp.B1Dim;
+Nc = prbp.Nc;
+fov = prbp.fov;
+allmaps = prbp.allmaps;
 
 load('kTrandphases.mat');
 for c_kTpoints = numkTpoints
@@ -24,6 +30,7 @@ for c_kTpoints = numkTpoints
                 
                 % initialize maps (to be sure to have the right size)
                 maps.numberofmaps = Nm;
+                maps.fov = fov;
                 maps.b1   = zeros(B1Dim(1),B1Dim(2),B1Dim(3)*Nm,Nc);
                 maps.mask = zeros(B1Dim(2),B1Dim(2),B1Dim(3)*Nm);
                 maps.b0   = zeros(B1Dim(2),B1Dim(2),B1Dim(3)*Nm);
@@ -93,7 +100,7 @@ for c_kTpoints = numkTpoints
                 waveforms_all{c_kTpoints, c_diffrand, c_lambdaexp} = wvfrms;
 
                 if b_evalAllDatasets == true
-                    evalAllDatasets; drawnow;
+                    evalAllDatasets('tailored',wvfrms, numTailored, numkTpoints, c_diffrand, c_lambdaexp, lambdavec, c_kTpoints, prbp); drawnow;
                 end
             end
         end
@@ -107,4 +114,6 @@ for c_kTpoints = numkTpoints
             sgtitle (['L-curve for ',pulseType,num2str(c_dat),'-',num2str(c_kTpoints),'kT phaseinit=',num2str(numPhaseInit)]);
         end
     end
+end
+designTailored_OK = 1;
 end

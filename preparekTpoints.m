@@ -1,33 +1,22 @@
-% This script prepares the universal kT-point pulse
+% This function prepares the universal kT-point pulse
 % 
 % Created by Christoph S. Aigner, PTB, June 2021.
 % Email: christoph.aigner@ptb.de
 
-roi     = maps.mask;    % load mask
-B1in    = maps.b1;      % load B1 maps
-f0      = maps.b0(:);   % load b0 map, NOT SUPPORTED YET
-fov     = maps.fov;     % load FOV, in cm
+function [brfvec, gvec, prepUP_OK] = preparekTpoints(Nsubpts, gradblipred, wvfrms, prbp)
+
+Nc      = prbp.Nc;
 rfw     = wvfrms.rf;    % load the optimized kt rf weights
-ktoints = wvfrms.k;     % load the phase encoding points 
-Nrungs  = prbp.Npulse;  % # rungs
+Nrungs  = size(wvfrms.rf,1);  % # rungs
 dt      = prbp.dt*1e3;  % in ms
 gambar  = 42.57;        % gyromagnetic ratio gamma [MHz/T]
-Nc      = size(B1in,4); % # tx channels
-dimxyz  = size(roi);    % pixels, dim of design grid
-Ns      = prod(dimxyz); % total # pixels
-sensd   = reshape(B1in,[Ns Nc]); % reshape B1 
-ndim    = ndims(roi);   % dimension
-
-if(prbp.Nsubpts ~= 10)
-    disp('prbp.Nsubpts is not 10!!!');
-end
 
 % perform some kind of modifications (abs, etc)
 %compute the required gradient area to move to the optimized k-locations
 garea   = diff([ wvfrms.k; zeros(1,size(wvfrms.k,2)) ],1)/gambar*100; %convert to SI units (cm -> m)
 
 %init RF structure for one rung
-rfss    = [ones(prbp.Nsubpts,1); zeros(prbp.nblippts/gradblipred,1)]; %init RF for one rung
+rfss    = [ones(Nsubpts,1); zeros(prbp.nblippts/gradblipred,1)]; %init RF for one rung
 rfss = rfss/10; % to match the simulations Gauss->mT; anyways.. we are using relative B1 maps???
 
 %compute the gradients and RF for each rung and initialize them with []
@@ -37,7 +26,7 @@ brfvec = [];
 blip = [linspace(0,1,10/gradblipred), linspace(1,0,10/gradblipred)].'/(10*dt)*gradblipred; 
     
 for counter=1:Nrungs
-    gvec = [gvec; [ zeros(prbp.Nsubpts,3); repmat(blip, [1 3])].*garea(counter,:)];
+    gvec = [gvec; [ zeros(Nsubpts,3); repmat(blip, [1 3])].*garea(counter,:)];
     brfvec = [brfvec; repmat(rfss,[1 Nc]).*rfw(counter,:)];
 end
 
@@ -93,3 +82,6 @@ brfvec = conj(brfvec);
 gvec(:,3)=-gvec(:,3);
 
 fprintf('RF and Gradients prepared. T: %d ms, peak slew rate: %.4f T/m/s.\n\n',totalduration_in_ms,maxslew);
+
+prepUP_OK = 1;
+end

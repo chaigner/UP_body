@@ -22,24 +22,22 @@
 % This code is free under the terms of the GPL-3.0 license.
 
 addpath ktutil   % add code by Will Grissom and Zhipeng Cao
-pathDat = 'B1R'; % set the folder that contains the in vivo B1+ datasets
 
 % parameters
 % allIndices     ... all B1+ datasets (library + test-cases)
 % libraryIndices ... datasets used in the optimization (library)
-allIndices     = 1:31; % there are 31 B1+ datasets in total
-libraryIndices = 1:22; % the paper used the first 22 B1+ datasets
-allmaps        = cell(1, length(allIndices));     % pre-allocate the cell 
-librarymaps    = cell(1, length(libraryIndices)); % pre-allocate the cell 
-c_dat          = 1;     % initialize dataset counter
-prbp.dt        = 10e-6; % dwell time in sec
-prbp.Nsubpts   = 10;    % # of time points for RF subpulses 
-prbp.nblippts  = 20;    % # of time points for gradient blips
-prbp.delta_tip = 10;    % flip angle in degrees
+prbp.pathDat        = 'B1R'; % set the folder that contains the in vivo B1+ datasets
+prbp.allIndices     = 1:31; % there are 31 B1+ datasets in total
+prbp.libraryIndices = 1:22; % the paper used the first 22 B1+ datasets
+prbp.allmaps        = cell(1, length(prbp.allIndices));     % pre-allocate the cell 
+prbp.librarymaps    = cell(1, length(prbp.libraryIndices)); % pre-allocate the cell 
+prbp.dt             = 10e-6; % dwell time in sec
+prbp.Nsubpts        = 10;    % # of time points for RF subpulses 
+prbp.nblippts       = 20;    % # of time points for gradient blips
+prbp.delta_tip      = 10;    % flip angle in degrees
 
 %% load the B1R datasets and create the library and unseen test cases
-loadB1R_OK = 0;
-loadB1R;
+[prbp.allmaps, prbp.librarymaps, prbp.B1Dim, prbp.Nc, prbp.fov, loadB1R_OK] = loadB1R(prbp);
 
 if ~loadB1R_OK
 	disp('The 31 channel-wise invivo B1+ datasets of the human body at 7T');
@@ -49,43 +47,39 @@ if ~loadB1R_OK
 end
 
 %% default shim setting
-pulseType   = 'default';
-numkTpoints = 1; 
-c_kTpoints  = 1;
-wvfrms.k    = zeros(numkTpoints,3);
-rfw         = ones(numkTpoints,Nc)*0.1;
-evalAllDatasets;
+wvfrms.k    = zeros(1,3);
+wvfrms.rf   = ones(1,prbp.Nc)*0.1;
+eval_OK = evalAllDatasets('default', wvfrms, 0, 0, 0, 0, 1, 1, prbp);
 
 %% tailored design
-pulseType         = 'tailored';
-numkTpoints       = 4;      % number of kT points; tested for 1:5
-numPhaseInit      = 165;    % 1-200, #165 performed best for the library
-lambdavec         = [4.64];  % result of the L curve optimization; 10^0-10^7
-phsinitmode       = 'randphase'; % performed best
-b_evalAllDatasets = true;   % evaluate the tailored pulse in allmaps
-numTailored       = 1;      % just compute one tailored pulse
+% numkTpoints       = 4;      % number of kT points; tested for 1:5
+% numPhaseInit      = 165;    % 1-200, #165 performed best for the library
+% lambdavec         = [4.64];  % result of the L curve optimization; 10^0-10^7
+% phsinitmode       = 'randphase'; % performed best
+% b_evalAllDatasets = true;   % evaluate the tailored pulse in allmaps
+% numTailored       = 1;      % just compute one tailored pulse
 
 %do the tailored design and evaluate the tailored pulse in allmaps
-designTailored; 
+designTailored_OK = designTailored('tailored', 4, 165, 4.64, 'randphase', 1, 1, prbp); 
 
 %% do the UP design
-pulseType         = 'UP';
-numkTpoints       = 4;        % number of kT points; tested for 1:5
-numPhaseInit      = 165;      % 1-200, #165 performed best for the library
-lambdavec         = [107.97]; % result of the L curve optimization; 10^0-10^7
-phsinitmode       = 'randphase';
-b_evalAllDatasets = true;   % evaluate the tailored pulse in allmaps
+% pulseType         = 'UP';
+% numkTpoints       = 4;        % number of kT points; tested for 1:5
+% numPhaseInit      = 165;      % 1-200, #165 performed best for the library
+% lambdavec         = [107.97]; % result of the L curve optimization; 10^0-10^7
+% phsinitmode       = 'randphase';
+% b_evalAllDatasets = true;   % evaluate the tailored pulse in allmaps
 
 %do the UP design and evaluate the universal pulse in allmaps
-designUP; 
+[wvfrms, designUP_OK] = designUP('UP', 4, 165, 107.97, 'randphase', 1, 1, prbp); 
 
 %% prepare the UP
 % modify timing of the RF pulse
-prbp.Nsubpts  = 14; %optimized for 10
-gradblipred   = 2;  %optimized for 20ms BE CAREFUL WITH THE SLEW RATE
+% prbp.Nsubpts  = 14; %optimized for 10
+% gradblipred   = 2;  %optimized for 20ms BE CAREFUL WITH THE SLEW RATE
 
 %prepare and plot the UP 
-preparekTpoints;
+[brfvec, gvec, prepUP_OK] = preparekTpoints(14, 2, wvfrms, prbp);
 
 % brfvec and gvec can then be used to generate pulse files for the scanner
 

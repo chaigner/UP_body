@@ -1,9 +1,15 @@
-% This script evaluates default shim setting, tailored pulses and universal
+% This function evaluates default shim setting, tailored pulses and universal
 % pulses using the CV in the 3D heart target region (small tip angle) in 
 % each of the B1+ datasets. 
 % 
 % Created by Christoph S. Aigner, PTB, June 2021.
 % Email: christoph.aigner@ptb.de
+
+function eval_OK = evalAllDatasets(pulseType, wvfrms, numTailored, numkTpoints, c_diffrand, c_lambdaexp, lambdavec, c_kTpoints, prbp)
+
+Nc = prbp.Nc;
+fov = prbp.fov;
+allmaps = prbp.allmaps;
 
 %initialize the arrays for the first time
 if ~(exist('CV_pre_all_subectrob','var'))
@@ -39,13 +45,11 @@ for c_subj=1:(length(allmaps)) %loop over the B1+ datasets
     maps.mask = logical(maps.mask);
 
     % set the parameters used for preparation and quality check  
-    fov     = maps.fov;               % field of view, cm
-    Nc      = size(maps.b1,4);        % # tx channels
     dimxyz  = size(maps.b1(:,:,:,1)); % pixels, dim of design grid
     Ns      = prod(dimxyz);           % total # pixels
-    Npulset = size(rfw,1);            % number of subpulses
+    Npulset = size(wvfrms.rf,1);            % number of subpulses
     k       = wvfrms.k;               % phase encoding position
-    rf      = rfw;                    % complex RF weights for each kT-point
+    rf      = wvfrms.rf;                    % complex RF weights for each kT-point
     dt      = prbp.dt;                % dt, s
     gambar  = 4257;                   % gamma/2pi, Hz/T
     gam     = gambar*2*pi;            % gamma, radians/g
@@ -150,3 +154,6 @@ set(gca, ...
 xlabel('B1+ dataset');
 ylabel('CV / %');
 legend;
+
+eval_OK = 1;
+end

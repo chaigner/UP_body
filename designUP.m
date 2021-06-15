@@ -1,4 +1,4 @@
-% This script computes universal kT-point pulses as described in
+% This function computes universal kT-point pulses as described in
 % Christoph S. Aigner, Sebastian Dietrich, Tobias Schaeffter and Sebastian
 % Schmitter, Calibration-free pTx of the human heart at 7T via 3D universal 
 % pulses, submitted to Magn. Reson. Med. 2021
@@ -10,11 +10,18 @@
 % Created by Christoph S. Aigner, PTB, June 2021.
 % Email: christoph.aigner@ptb.de
 
+function [wvfrms, designUP_OK] = designUP(pulseType, numkTpoints, numPhaseInit, lambdavec, phsinitmode, b_evalAllDatasets, numTailored, prbp) 
+
+B1Dim = prbp.B1Dim;
+Nc = prbp.Nc;
+fov = prbp.fov;
+librarymaps = prbp.librarymaps;
+
 load('kTrandphases.mat');
 for c_kTpoints = numkTpoints
     for c_diffrand = numPhaseInit
         for c_lambdaexp=1:length(lambdavec)
-            disp(['design ',pulseType,num2str(length(libraryIndices)),'-',num2str(c_kTpoints),'kT, phaseinit=',num2str(c_diffrand), ', regularization=',num2str(lambdavec(c_lambdaexp))]);
+            disp(['design ',pulseType,num2str(length(prbp.libraryIndices)),'-',num2str(c_kTpoints),'kT, phaseinit=',num2str(c_diffrand), ', regularization=',num2str(lambdavec(c_lambdaexp))]);
  
             Nm = length(librarymaps); %number of B1+datasets in the library
             
@@ -23,6 +30,7 @@ for c_kTpoints = numkTpoints
             maps.b1   = zeros(B1Dim(1),B1Dim(2),B1Dim(3)*Nm,Nc);
             maps.mask = zeros(B1Dim(2),B1Dim(2),B1Dim(3)*Nm);
             maps.b0   = zeros(B1Dim(2),B1Dim(2),B1Dim(3)*Nm);
+            maps.fov = fov;
 
             % get the maps from allmaps
             for c_dat=1:Nm
@@ -91,7 +99,7 @@ for c_kTpoints = numkTpoints
             waveforms_all{c_kTpoints, c_diffrand, c_lambdaexp} = wvfrms;
             
             if b_evalAllDatasets == true
-                evalAllDatasets; drawnow;
+                evalAllDatasets('tailored',wvfrms, numTailored, numkTpoints, c_diffrand, c_lambdaexp, lambdavec, c_kTpoints, prbp); drawnow;
             end
         end
         
@@ -104,4 +112,6 @@ for c_kTpoints = numkTpoints
             sgtitle (['L-curve for ',pulseType,num2str(length(libraryIndices)),'-',num2str(c_kTpoints),'kT phaseinit=',num2str(numPhaseInit)]);
         end
     end
+end
+designUP_OK = 1;
 end

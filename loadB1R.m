@@ -1,4 +1,4 @@
-% This script loads 31 in vivo B1+ datasets used in
+% This function loads 31 in vivo B1+ datasets used in
 % Christoph S. Aigner, Sebastian Dietrich, Tobias Schaeffter and Sebastian
 % Schmitter, Calibration-free pTx of the human heart at 7T via 3D universal 
 % pulses, submitted to Magn. Reson. Med. 2021
@@ -9,14 +9,18 @@
 % Created by Christoph S. Aigner, PTB, June 2021.
 % Email: christoph.aigner@ptb.de
 
-disp(['load ', num2str(length(allIndices)), ' invivo B1+ maps']);
-for c_subj=1:length(allIndices) 
+function [allmaps, librarymaps, B1Dim, Nc, fov, loadB1R_OK] = loadB1R(prbp)
+
+c_dat = 1;
+
+disp(['load ', num2str(length(prbp.allIndices)), ' invivo B1+ maps']);
+for c_subj=1:length(prbp.allIndices) 
     %load the Matlab container for dataset #countsubj
-    if ~isfile([pathDat '\lightB1R_' num2str(allIndices(c_subj)) '.mat'])
+    if ~isfile([prbp.pathDat '\lightB1R_' num2str(prbp.allIndices(c_subj)) '.mat'])
         disp('NO B1 MAPS FOUND!');
         return;
     end
-    load([pathDat '\lightB1R_' num2str(allIndices(c_subj)) '.mat']);
+    load([prbp.pathDat '\lightB1R_' num2str(prbp.allIndices(c_subj)) '.mat']);
     B1R = non_respiration_resolved_B1R;
     
     %rearrange the dimensions 
@@ -31,6 +35,7 @@ for c_subj=1:length(allIndices)
     if c_subj == 1
         B1Dim = size(maps.b1);
         Nc = B1Dim(4); %number of transmit channels
+        fov = B1R.kTpoints.maps.fov; %fov in cm
     else
         if B1Dim ~= size(maps.b1)
             disp(['loaded B1 map #',num2str(c_subj), ...
@@ -43,15 +48,16 @@ for c_subj=1:length(allIndices)
     maps.mask    = B1R.kTpoints.maps.mask;
     maps.fov     = B1R.kTpoints.maps.fov;
     maps.phsinit = B1R.kTpoints.maps.phsinit;
-    maps.DatNum  = allIndices(c_subj);
+    maps.DatNum  = prbp.allIndices(c_subj);
 
     % add the data to a cell array containing all datasets
     allmaps{c_subj} = maps;
 
     % add the data to a cell array for the optimization (library)
-    if ismember(allIndices(c_subj),libraryIndices)
+    if ismember(prbp.allIndices(c_subj),prbp.libraryIndices)
         librarymaps{c_dat} = maps;
         c_dat = c_dat+1;
     end
     loadB1R_OK = 1;
+end
 end
