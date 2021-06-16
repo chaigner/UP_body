@@ -99,7 +99,7 @@ for c_kTpoints = numkTpoints
             waveforms_all{c_kTpoints, c_diffrand, c_lambdaexp} = wvfrms;
             
             if b_evalAllDatasets == true
-                evalAllDatasets('tailored',wvfrms, numTailored, numkTpoints, c_diffrand, c_lambdaexp, lambdavec, c_kTpoints, prbp); drawnow;
+                evalAllDatasets('UP',wvfrms, numTailored, numkTpoints, c_diffrand, c_lambdaexp, lambdavec, c_kTpoints, prbp); drawnow;
             end
         end
         
