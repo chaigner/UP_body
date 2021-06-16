@@ -44,10 +44,9 @@ for c_subj=1:length(prbp.allIndices)
     end
 
     %save the other parameters. So far, B0 maps are set to 0
-    maps.b0      = B1R.kTpoints.maps.b0;
+    maps.b0      = maps.b1*0;
     maps.mask    = B1R.kTpoints.maps.mask;
     maps.fov     = B1R.kTpoints.maps.fov;
-    maps.phsinit = B1R.kTpoints.maps.phsinit;
     maps.DatNum  = prbp.allIndices(c_subj);
 
     % add the data to a cell array containing all datasets
