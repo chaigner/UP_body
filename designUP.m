@@ -24,6 +24,7 @@ for c_kTpoints = numkTpoints
             disp(['design ',pulseType,num2str(length(prbp.libraryIndices)),'-',num2str(c_kTpoints),'kT, phaseinit=',num2str(c_diffrand), ', regularization=',num2str(lambdavec(c_lambdaexp))]);
  
             Nm = length(librarymaps); %number of B1+datasets in the library
+            prbp.Nm = Nm;
             
             % initialize maps (to be sure to have the right size)
             maps.numberofmaps = Nm;

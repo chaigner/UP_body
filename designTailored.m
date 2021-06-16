@@ -27,6 +27,7 @@ for c_kTpoints = numkTpoints
                       num2str(lambdavec(c_lambdaexp))]);
                   
                 Nm = 1; %tailored design is for 1 B1+ dataset only
+                prbp.Nm = Nm;
                 
                 % initialize maps (to be sure to have the right size)
                 maps.numberofmaps = Nm;

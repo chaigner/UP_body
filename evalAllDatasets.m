@@ -6,7 +6,7 @@
 % Email: christoph.aigner@ptb.de
 
 function eval_OK = evalAllDatasets(pulseType, wvfrms, numTailored, numkTpoints, c_diffrand, c_lambdaexp, lambdavec, c_kTpoints, prbp)
-
+Nm = prbp.Nm;
 Nc = prbp.Nc;
 fov = prbp.fov;
 allmaps = prbp.allmaps;

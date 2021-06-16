@@ -49,6 +49,7 @@ end
 %% default shim setting
 wvfrms.k    = zeros(1,3);
 wvfrms.rf   = ones(1,prbp.Nc)*0.1;
+prbp.Nm = 1;
 eval_OK = evalAllDatasets('default', wvfrms, 0, 0, 0, 0, 1, 1, prbp);
 
 %% tailored design
