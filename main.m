@@ -37,7 +37,7 @@ prbp.nblippts       = 20;    % # of time points for gradient blips
 prbp.delta_tip      = 10;    % flip angle in degrees
 
 %% load the B1R datasets and create the library and unseen test cases
-[prbp.allmaps, prbp.librarymaps, prbp.B1Dim, prbp.Nc, prbp.fov, loadB1R_OK] = loadB1R(prbp);
+[prbp, loadB1R_OK] = loadB1R(prbp);
 
 if ~loadB1R_OK
 	disp('The 31 channel-wise invivo B1+ datasets of the human body at 7T');
@@ -49,38 +49,41 @@ end
 %% default shim setting
 wvfrms.k    = zeros(1,3);
 wvfrms.rf   = ones(1,prbp.Nc)*0.1;
-prbp.Nm = 1;
-eval_OK = evalAllDatasets('default', wvfrms, 0, 0, 0, 0, 1, 1, prbp);
+prbp.Nm     = 1;
+evalAllDatasets('default', wvfrms, 0, 0, 0, 0, 1, 1, prbp);
 
 %% tailored design
-% numkTpoints       = 4;      % number of kT points; tested for 1:5
-% numPhaseInit      = 165;    % 1-200, #165 performed best for the library
-% lambdavec         = [4.64];  % result of the L curve optimization; 10^0-10^7
-% phsinitmode       = 'randphase'; % performed best
-% b_evalAllDatasets = true;   % evaluate the tailored pulse in allmaps
-% numTailored       = 1;      % just compute one tailored pulse
+% default parameters:
+%   numkTpoints       = 4;      % number of kT points; tested for 1:5
+%   numPhaseInit      = 165;    % 1-200, #165 performed best for the library
+%   lambdavec         = [4.64];  % result of the L curve optimization; 10^0-10^7
+%   phsinitmode       = 'randphase'; % performed best
+%   b_evalAllDatasets = true;   % evaluate the tailored pulse in allmaps
+%   numTailored       = 1;      % just compute one tailored pulse
 
 %do the tailored design and evaluate the tailored pulse in allmaps
-designTailored_OK = designTailored('tailored', 4, 165, 4.64, 'randphase', 1, 1, prbp); 
+wvfrms = designTailored('tailored', 4, 165, 4.64, 'randphase', 1, 1, prbp); 
 
 %% do the UP design
-% pulseType         = 'UP';
-% numkTpoints       = 4;        % number of kT points; tested for 1:5
-% numPhaseInit      = 165;      % 1-200, #165 performed best for the library
-% lambdavec         = [107.97]; % result of the L curve optimization; 10^0-10^7
-% phsinitmode       = 'randphase';
-% b_evalAllDatasets = true;   % evaluate the tailored pulse in allmaps
+% default parameters:
+%   pulseType         = 'UP';
+%   numkTpoints       = 4;        % number of kT points; tested for 1:5
+%   numPhaseInit      = 165;      % 1-200, #165 performed best for the library
+%   lambdavec         = [107.97]; % result of the L curve optimization; 10^0-10^7
+%   phsinitmode       = 'randphase';
+%   b_evalAllDatasets = true;   % evaluate the tailored pulse in allmaps
 
 %do the UP design and evaluate the universal pulse in allmaps
-[wvfrms, designUP_OK] = designUP('UP', 4, 165, 107.97, 'randphase', 1, 1, prbp); 
+wvfrms = designUP('UP', 4, 165, 107.97, 'randphase', 1, 1, prbp); 
 
 %% prepare the UP
 % modify timing of the RF pulse
-% prbp.Nsubpts  = 14; %optimized for 10
-% gradblipred   = 2;  %optimized for 20ms BE CAREFUL WITH THE SLEW RATE
+% default parameters:
+%   Nsubpts       = 14; %optimized for 10
+%   gradblipred   = 2;  %optimized for 20ms BE CAREFUL WITH THE SLEW RATE
 
 %prepare and plot the UP 
-[brfvec, gvec, prepUP_OK] = preparekTpoints(14, 2, wvfrms, prbp);
+[brfvec, gvec] = preparekTpoints(14, 2, wvfrms, prbp);
 
 % brfvec and gvec can then be used to generate pulse files for the scanner
 
