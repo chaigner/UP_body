@@ -2,11 +2,21 @@
 
 This repository contains a MATLAB implementation to load 31 channel-wise invivo B1+ datasets of the human body at 7T and to compute and evaluate tailored and universal pulses  in the human heart based on a library of 22 B1+ datasets and 9 unseen test cases as described in [1]. The channel-wise invivo B1+ datasets of the human body at 7T are available at: TBD and were computed as described in [2].
 
+
 ##### Authors:
 - Christoph S. Aigner  (<christoph.aigner@ptb.de>)
 - Sebastian Dietrich   (<sebastian.dietrich@ptb.de>)
 - Tobias Schäffter     (<tobias.schaeffter@ptb.de>)
 - Sebastian Schmitter  (<sebastian.schmitter@ptb.de>)
+
+Usage
+--------
+
+Run script main.m: This script takes the user through three pulse designs and evaluations that were also shown in [1]. This script shows three cases: 1) default shim setting: phase and equal magnitude set by the coil manufacturer to provide sufficient B1+ throughout the heart and the aorta (unseen test cases: 31), 2) tailored1-4kT: optimized for the B1+-dataset of subject 1 (library: 1, unseen test cases: 30), and 3) UP22-4kT: optimized for a library of 22 B1+-datasets (library: 22, unseen test cases: 9). The functions rely on B1 maps and ROIs available at https://figshare.com/articles/dataset/31_channel-wise_invivo_B1_maps_of_the_human_body_at_7T/14778345.
+
+The pulse diagram shows the complex RF voltages (magnitude and phase) and 3D gradient blips of the UP22-4kT.
+
+![figureresults](figureresults.png)
 
 Contents
 --------
