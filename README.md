@@ -35,7 +35,7 @@ Contents
     kTrandphases.mat    200x8 double matrix with randomized phase initials
     
 ##### External data files used by the test scripts:
-    B1R.zip          The 31 channel-wise invivo B1+ datasets of the human body at 7T are available at https://figshare.com/articles/dataset/31_channel-wise_invivo_B1_maps_of_the_human_body_at_7T/14778345
+    B1R.zip          The 31 channel-wise invivo B1+ datasets of the human body at 7T are available at https://doi.org/10.6084/m9.figshare.14778345.v2
     
 Dependencies
 ------------
