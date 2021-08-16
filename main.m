@@ -9,8 +9,7 @@
 % pulses, submitted to Magn. Reson. Med. 2021
 %
 % The 31 channel-wise invivo B1+ datasets of the human body at 7T are 
-% available at: 
-% https://figshare.com/articles/dataset/31_channel-wise_invivo_B1_maps_of_the_human_body_at_7T/14778345
+% available at: https://doi.org/10.6084/m9.figshare.14778345.v2
 %
 % The optimization of the kT-points is performed using code by Will Grissom
 % and Zhipeng Cao (https://bitbucket.org/wgrissom/acptx/) who have given 
