@@ -1,6 +1,6 @@
 # UP_body
 
-This repository contains a MATLAB implementation to load 31 channel-wise invivo B1+ datasets of the human body at 7T and to compute and evaluate tailored and universal pulses  in the human heart based on a library of 22 B1+ datasets and 9 unseen test cases as described in [1]. The channel-wise invivo B1+ datasets of the human body at 7T are available at: TBD and were computed as described in [2].
+This repository contains a MATLAB implementation to load 31 channel-wise invivo B1+ datasets of the human body at 7T and to compute and evaluate tailored and universal pulses  in the human heart based on a library of 22 B1+ datasets and 9 unseen test cases as described in [1]. The channel-wise invivo B1+ datasets of the human body at 7T are available at: https://doi.org/10.6084/m9.figshare.14778345.v2 and were computed as described in [2].
 
 
 ##### Authors:
