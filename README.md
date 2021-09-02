@@ -57,7 +57,7 @@ For details, see the attached LICENSE.
 Reference
 ---------
 
-[1] Aigner, CS, Dietrich, S, Schaeffter, T, and Schmitter, S, Calibration-free pTx of the human heart at 7T via 3D universal pulses, submitted to Magn. Reson. Med. 2021
+[1] Aigner, CS, Dietrich, S, Schaeffter, T, Schmitter, S. Calibration-free pTx of the human heart at 7T via 3D universal pulses. Magn Reson Med. 2021; 00: 1– 15. https://doi.org/10.1002/mrm.28952
 
 [2] Dietrich, S, Aigner, CS, Kolbitsch, C, et al. 3D Free-breathing multichannel absolute B1+ Mapping in the human body at 7T. Magn Reson Med. 2021; 85: 2552– 2567. https://doi.org/10.1002/mrm.28602
 
